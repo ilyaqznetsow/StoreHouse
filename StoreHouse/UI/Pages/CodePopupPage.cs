@@ -15,7 +15,6 @@ namespace StoreHouse.UI.Pages
             {
                 BackgroundColor = Color.White,
                 Children = {
-                    new Label { Text = "Result" }.Bind(Label.TextProperty, "CodeValue"),
                     new ZXing.Net.Mobile.Forms.ZXingBarcodeImageView
                         {
                             BackgroundColor = Color.Gray,
@@ -29,7 +28,8 @@ namespace StoreHouse.UI.Pages
                             WidthRequest = 300,
                             HeightRequest = 300
                         }
-                    .CenterExpand().Bind(ZXingBarcodeImageView.BarcodeValueProperty, "CodeValue"),
+                    .CenterExpand().Bind(ZXingBarcodeImageView.BarcodeValueProperty, "CodeValue")
+                    .Bind(ZXingBarcodeImageView.SourceProperty,"CodeSource", BindingMode.OneWayToSource),
                      new Button{Text="OK"}.Bind(Button.CommandProperty, GoBackCommandProperty.PropertyName, source:this)
         }
             };

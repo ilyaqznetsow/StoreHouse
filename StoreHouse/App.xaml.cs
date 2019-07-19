@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using StoreHouse.DAL;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,6 +12,19 @@ namespace StoreHouse
 
     public partial class App : Application
     {
+        static Database database;
+        public static Database Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new Database(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "StoreHouse.db"));
+                }
+                return database;
+            }
+        }
+
         public App()
         {
             InitializeComponent();

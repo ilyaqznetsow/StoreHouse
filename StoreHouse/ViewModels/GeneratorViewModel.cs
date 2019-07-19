@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using StoreHouse.DAL;
 using StoreHouse.Models;
 using Xamarin.Forms;
 using XF.Base.Enums;
@@ -21,17 +22,8 @@ namespace StoreHouse.ViewModels
 
         
 
-        public StoreItem NewItem { get; set; } = new StoreItem() { Volume = new Volume()};
-
-        public List<StorePlace> Places { get; set; } = new List<StorePlace>
-        {
-             new StorePlace{ Id = Guid.NewGuid(), Name ="name 1", VerticalPosition = 1, HorizontalPosition = 1},
-             new StorePlace{ Id = Guid.NewGuid(), Name ="name 2", VerticalPosition = 2, HorizontalPosition = 1},
-             new StorePlace{ Id = Guid.NewGuid(), Name ="name 3", VerticalPosition = 3, HorizontalPosition = 1},
-             new StorePlace{ Id = Guid.NewGuid(), Name ="name 4", VerticalPosition = 4, HorizontalPosition = 1},
-        };
-
-        public string CodeValue { get; set; } = "asd";
+        public StoreItem NewItem { get; set; } = new StoreItem() { };
+        public StorePlace NewPlace { get; set; } = new StorePlace() { };
 
         public ObservableCollection<StoreItem> StoreItems { get; set; }
 
@@ -40,15 +32,29 @@ namespace StoreHouse.ViewModels
             StoreItems = new ObservableCollection<StoreItem>();
         }
 
-
-        public ICommand GenerateCommand => MakeCommand(async() =>
+        public ICommand GenerateItemCommand => MakeCommand(async () =>
         {
+            NewItem.Id = await App.Database.SaveAsync(NewItem);
+            var code = Guid.NewGuid();
+            NewItem.CodeId = code;
+            NewItem.PlaceId = NewPlace.Id;
 
-            CodeValue = NewItem.Id.ToString();
 
             await NavigateTo(Pages.CodePopup, Pages.Generator, NavigationMode.Popup,
                 navParams: new Dictionary<string, object> {
-                    {"CodeValue", CodeValue }
+                    {"CodeValue", code.ToString() },
+                }) ;
+        });
+
+        public ICommand GeneratePlaceCommand => MakeCommand(async() =>
+        {
+            NewPlace.Id = await App.Database.SaveAsync(NewPlace);
+            NewItem.PlaceId = NewPlace.Id;
+
+
+            await NavigateTo(Pages.CodePopup, Pages.Generator, NavigationMode.Popup,
+                navParams: new Dictionary<string, object> {
+                    {"CodeValue", NewPlace.Id.ToString()  },
                 });
         });
 

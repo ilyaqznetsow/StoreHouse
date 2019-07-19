@@ -7,6 +7,7 @@ namespace XF.Base.Enums
         Generator,
         Scanner,
         Store,
-        CodePopup
+        CodePopup,
+        StoreItemPopup
     }
 }

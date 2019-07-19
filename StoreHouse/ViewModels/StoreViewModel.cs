@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using StoreHouse.Models;
 using StoreHouse.UI;
+using XF.Base.Enums;
 using XF.Base.ViewModel;
 
 namespace StoreHouse.ViewModels
@@ -10,44 +12,57 @@ namespace StoreHouse.ViewModels
     public class StoreViewModel:BaseViewModel
     {
         public InfiniteScrollCollection<object> StoreCollection { get; set; }
+        int CollectionSize = 100;
+        public dynamic SelectedItem { get; set; }
 
         public StoreViewModel()
         {
             StoreCollection = new InfiniteScrollCollection<object>();
-            StoreCollection.OnCanLoadMore = ()=> StoreCollection.Count < 20;
+            StoreCollection.OnCanLoadMore = ()=> StoreCollection.Count < TotalCount;
             StoreCollection.OnLoadMore += async () =>
             {
-                return await LoadData();
+                return await LoadData(SelectedItem.Type);
             };
         }
-
-        async Task<List<StoreItem>> LoadData()
+        public bool IsRefreshing { get; set; }
+        public ICommand RefreshCommand => MakeCommand(async () =>
         {
-            return await Task.Run(() => new List<StoreItem> { new StoreItem
-               {
-                   AssignDate = DateTime.Now,
-                    CreationDate = DateTime.Now.AddDays(-1),
-                     Name = "name",
-                      Place = new StorePlace
-                      {
-                           Name="name place 1",
-                            HorizontalPosition = 0,
-                            VerticalPosition = 1
-                      },
-                       Type="Коробок",
-                        Volume = new Volume
-                        {
-                            Width = 100,
-                            Height = 200,
-                            Length = 50
-                        }
-               }});
-        }
-
-        public override async Task OnPageAppearing()
-        {
-            await  base.OnPageAppearing();
+            if(SelectedItem == null)
+            {
+              await  ShowAlert("Ошибка", "Сначала выберите что смотрим","понял");
+                return;
+            }
+            IsRefreshing = true;
+            StoreCollection.Clear();
+            TotalCount = await LoadCount(SelectedItem?.Type ?? typeof(StoreItem));
             await StoreCollection.LoadMoreAsync();
+            IsRefreshing = false;
+        });
+
+        public ICommand GoToDetailsCommand =>
+            MakeCommand(async (item) =>
+            {
+                if (item != null)
+                {
+                    await NavigateTo(Pages.StoreItemPopup, Pages.Store, NavigationMode.Popup,
+                navParams: new Dictionary<string, object> { { "Object", item } });
+                }
+            });
+
+        async Task<List<object>> LoadData(Type t)
+        {
+            if(t != null)
+            return await App.Database.GetAsync(t);
+            return null;
         }
+
+        async Task<int> LoadCount(Type t)
+        {
+            if (t != null)
+                return await App.Database.GetCountAsync(t);
+            return 0;
+        }
+
+        public int TotalCount { get; set; }
     }
 }

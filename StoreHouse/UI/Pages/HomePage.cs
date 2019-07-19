@@ -8,7 +8,7 @@ namespace StoreHouse.UI.Pages
     {
         public HomePage()
         {
-            Title = "Home";
+            Title = "StoreHouse app";
 
             UnselectedTabColor = Color.DimGray;
             SelectedTabColor = Color.DarkGreen;

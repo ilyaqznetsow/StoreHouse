@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using XF.Base.Extensions;
 using XF.Base.UI;
 using ZXing.Net.Mobile.Forms;
 
@@ -17,24 +18,15 @@ namespace StoreHouse.UI.Pages
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 AutomationId = "zxingScannerView",
-            };
-            zxing.OnScanResult += (result) =>
-                Device.BeginInvokeOnMainThread(async () => {
+            }.Bind(ZXingScannerView.ScanResultCommandProperty, "ScanResultCommand")
+            .Bind(ZXingScannerView.IsAnalyzingProperty, "IsAnalyzing")
+            .Bind(ZXingScannerView.IsScanningProperty, "IsScanning");
 
-                    // Stop analysis until we navigate away so we don't keep reading barcodes
-                    zxing.IsAnalyzing = false;
-
-                    // Show an alert
-                    await DisplayAlert("Scanned Barcode", result.Text, "OK");
-
-                    // Navigate away
-                    await Navigation.PopAsync();
-                });
-
+            
             overlay = new ZXingDefaultOverlay
             {
-                TopText = "Hold your phone up to the barcode",
-                BottomText = "Scanning will happen automatically",
+                TopText = "Сканирование",
+                BottomText = "Места",
                 ShowFlashButton = zxing.HasTorch,
                 AutomationId = "zxingDefaultOverlay",
             };
