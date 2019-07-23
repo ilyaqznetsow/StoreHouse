@@ -26,5 +26,11 @@
     <Folder Include="Behaviors\" />
     <Folder Include="DAL\" />
     <Folder Include="XF.Base\Behaviors\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Drawing.Common">
+      <HintPath>..\..\..\..\..\Library\Frameworks\Xamarin.Android.framework\Versions\9.4.0.34\lib\xamarin.android\xbuild-frameworks\MonoAndroid\v1.0\Facades\System.Drawing.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

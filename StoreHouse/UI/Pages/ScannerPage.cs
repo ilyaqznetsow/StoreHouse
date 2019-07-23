@@ -19,8 +19,7 @@ namespace StoreHouse.UI.Pages
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 AutomationId = "zxingScannerView",
             }.Bind(ZXingScannerView.ScanResultCommandProperty, "ScanResultCommand")
-            .Bind(ZXingScannerView.IsAnalyzingProperty, "IsAnalyzing")
-            .Bind(ZXingScannerView.IsScanningProperty, "IsScanning");
+            .Bind(ZXingScannerView.IsAnalyzingProperty, "IsAnalyzing");
 
             
             overlay = new ZXingDefaultOverlay
@@ -41,7 +40,6 @@ namespace StoreHouse.UI.Pages
             grid.Children.Add(zxing);
             grid.Children.Add(overlay);
 
-            // The root page of your application
             Content = grid;
         }
 

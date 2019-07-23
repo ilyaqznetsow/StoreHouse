@@ -4,22 +4,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using SQLite;
 using StoreHouse.Models;
+using Xamarin.Forms;
 
 namespace StoreHouse.DAL
 {
+
+    public interface IDatabase
+    {
+        SQLiteAsyncConnection CreateConnection();
+    }
     public class Database
     {
+
         readonly SQLiteAsyncConnection _database;
 
         public Database(string dbPath)
         {
-            _database = new SQLiteAsyncConnection(dbPath);
+
+             _database = new SQLiteAsyncConnection(dbPath);
             //_database.DropTableAsync<StoreItem>().Wait();
             //_database.DropTableAsync<StorePlace>().Wait();
-            if(_database.Table<StoreItem>() == null)
+          //  _database = DependencyService.Get<IDatabase>().CreateConnection();
             _database.CreateTableAsync<StoreItem>().Wait();
-            if (_database.Table<StorePlace>() == null)
-                _database.CreateTableAsync<StorePlace>().Wait();
+            _database.CreateTableAsync<StorePlace>().Wait();
         }
 
         #region get

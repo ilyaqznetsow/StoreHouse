@@ -28,7 +28,7 @@ namespace StoreHouse.UI.Pages
                     Children =
                     {
                         new Label()
-                        .Bind(Label.TextProperty, "TotalCount", stringFormat:"Количество записей: {0}"),
+                        .Bind(Label.TextProperty, "TotalCount", stringFormat:"Количество записей: {0}", source:BindingContext),
                         new Picker {
                             SelectedIndex = 0,
                             ItemDisplayBinding = new Binding("Title"),

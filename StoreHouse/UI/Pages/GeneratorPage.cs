@@ -22,11 +22,13 @@ namespace StoreHouse.UI.Pages
 
                 new StackLayout()
                 {
+                    Padding = 20,
+                    Spacing = 20,
                     Children = {
 
 
                    new Entry{
-                        Keyboard = Keyboard.Numeric,
+                        Keyboard = Keyboard.Text,
                         Placeholder ="Наименование места"
                     }.Bind(Entry.TextProperty,  "NewPlace.Name", BindingMode.TwoWay),
                     new Entry{
@@ -46,7 +48,7 @@ namespace StoreHouse.UI.Pages
 
 
 
-                    new Picker() { Title = "Тип детали" }
+                    new Picker() { Title = "Тип детали", Margin = new Thickness(0,40,0,0) }
                     .Bind(Picker.ItemsSourceProperty, "Types")
                     .Bind(Picker.SelectedItemProperty, "NewItem.Type"),
                     new DatePicker { }

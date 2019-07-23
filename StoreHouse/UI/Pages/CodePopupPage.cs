@@ -30,7 +30,10 @@ namespace StoreHouse.UI.Pages
                         }
                     .CenterExpand().Bind(ZXingBarcodeImageView.BarcodeValueProperty, "CodeValue")
                     .Bind(ZXingBarcodeImageView.SourceProperty,"CodeSource", BindingMode.OneWayToSource),
-                     new Button{Text="OK"}.Bind(Button.CommandProperty, GoBackCommandProperty.PropertyName, source:this)
+                     new Button{Text="Сохранить", BackgroundColor = Color.Transparent}
+                     .Bind(Button.CommandProperty, "SaveCommand"),
+                     new Button{Text="Хорошо", BackgroundColor = Color.Transparent}
+                     .Bind(Button.CommandProperty, GoBackCommandProperty.PropertyName, source:this)
         }
             };
         }

@@ -25,8 +25,7 @@ namespace StoreHouse.Droid
 
             UserDialogs.Init(this);
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
-            ZXing.Net.Mobile.Forms.Android.Platform.Init();
-
+            global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

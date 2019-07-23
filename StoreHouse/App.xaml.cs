@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using StoreHouse.DAL;
+using StoreHouse.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,7 +20,11 @@ namespace StoreHouse
             {
                 if (database == null)
                 {
-                    database = new Database(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "StoreHouse.db"));
+                    var path = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.Personal), "StoreHouse.db");
+                    if (Device.RuntimePlatform == Device.iOS)
+                        path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "..", "Library", "StoreHouse.db");
+                    database = new Database(path);
                 }
                 return database;
             }
@@ -29,6 +34,7 @@ namespace StoreHouse
         {
             InitializeComponent();
             DialogService.Init(this);
+            DependencyService.Register<ISaver>();
             NavigationService.Init(Pages.Home);
         }
 
