@@ -5,6 +5,6 @@ namespace StoreHouse.Services
 {
     public interface ISaver
     {
-         Task<bool> Save(string content);
+         bool Save(string content);
     }
 }

@@ -36,9 +36,9 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>NSCameraUsageDescription</key>
 	<string>true</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>true</string>
 	<key>NSPhotoLibraryUsageDescription</key>
+	<string>New Entry</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>New Entry</string>
 </dict>
 </plist>

@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreHouse.iOS", "StoreHous
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreHouse", "StoreHouse\StoreHouse.csproj", "{CFEFE738-3036-43C3-B0C8-CE502CD78E52}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VideoSample", "VideoSample", "{D32664C0-5116-4568-A0D7-8C5D00D6B3D0}"
+	ProjectSection(SolutionItems) = preProject
+		RPReplay_Final1563911560.MP4 = RPReplay_Final1563911560.MP4
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

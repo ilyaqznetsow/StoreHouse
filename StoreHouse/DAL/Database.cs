@@ -8,11 +8,6 @@ using Xamarin.Forms;
 
 namespace StoreHouse.DAL
 {
-
-    public interface IDatabase
-    {
-        SQLiteAsyncConnection CreateConnection();
-    }
     public class Database
     {
 
@@ -22,8 +17,8 @@ namespace StoreHouse.DAL
         {
 
              _database = new SQLiteAsyncConnection(dbPath);
-            //_database.DropTableAsync<StoreItem>().Wait();
-            //_database.DropTableAsync<StorePlace>().Wait();
+           // _database.DropTableAsync<StoreItem>().Wait();
+           // _database.DropTableAsync<StorePlace>().Wait();
           //  _database = DependencyService.Get<IDatabase>().CreateConnection();
             _database.CreateTableAsync<StoreItem>().Wait();
             _database.CreateTableAsync<StorePlace>().Wait();
@@ -67,8 +62,7 @@ namespace StoreHouse.DAL
         {
       
             if (item is StorePlace place)
-                return
-                    (place.Id != 0) ? await _database.UpdateAsync(place) :
+                return (place.Id != 0) ? await _database.UpdateAsync(place) :
                     await _database.InsertAsync(place);
             if (item is StoreItem storeItem)
                 return (storeItem.Id != 0) ? await _database.UpdateAsync(storeItem) : await _database.InsertAsync(storeItem);

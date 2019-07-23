@@ -34,10 +34,10 @@ namespace StoreHouse.ViewModels
 
         public ICommand GenerateItemCommand => MakeCommand(async () =>
         {
-            NewItem.Id = await App.Database.SaveAsync(NewItem);
             var code = Guid.NewGuid();
             NewItem.CodeId = code;
             NewItem.PlaceId = NewPlace.Id;
+            NewItem.Id = await App.Database.SaveAsync(NewItem);
 
 
             await NavigateTo(Pages.CodePopup, Pages.Generator, NavigationMode.Popup,
@@ -49,12 +49,12 @@ namespace StoreHouse.ViewModels
         public ICommand GeneratePlaceCommand => MakeCommand(async() =>
         {
             NewPlace.Id = await App.Database.SaveAsync(NewPlace);
-            NewItem.PlaceId = NewPlace.Id;
+            NewItem.PlaceId = await App.Database.GetCountAsync(typeof(StorePlace));
 
 
             await NavigateTo(Pages.CodePopup, Pages.Generator, NavigationMode.Popup,
                 navParams: new Dictionary<string, object> {
-                    {"CodeValue", NewPlace.Id.ToString()  },
+                    {"CodeValue", NewItem.PlaceId.ToString()  },
                 });
         });
 

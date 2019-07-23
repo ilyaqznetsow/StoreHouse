@@ -21,11 +21,10 @@ namespace StoreHouse.UI.Pages
             }.Bind(ZXingScannerView.ScanResultCommandProperty, "ScanResultCommand")
             .Bind(ZXingScannerView.IsAnalyzingProperty, "IsAnalyzing");
 
-            
+
             overlay = new ZXingDefaultOverlay
             {
-                TopText = "Сканирование",
-                BottomText = "Места",
+                TopText = "Наведите на",
                 ShowFlashButton = zxing.HasTorch,
                 AutomationId = "zxingDefaultOverlay",
             };
@@ -39,7 +38,10 @@ namespace StoreHouse.UI.Pages
             };
             grid.Children.Add(zxing);
             grid.Children.Add(overlay);
-
+            grid.Children.Add(new Label {
+                Margin = new Thickness(0,0,0,40),
+                TextColor = Color.White }.CenterH()
+            .Bind(Label.TextProperty, "ScannerItem").Bottom());
             Content = grid;
         }
 

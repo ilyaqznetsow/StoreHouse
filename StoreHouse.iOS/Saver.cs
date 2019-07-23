@@ -12,7 +12,7 @@ namespace StoreHouse.iOS
 {
     public class Saver:ISaver
     {
-        public Task<bool> Save(string data)
+        public bool Save(string data)
         {
             var SaveQRComplete = new TaskCompletionSource<bool>();
             try
@@ -54,7 +54,7 @@ namespace StoreHouse.iOS
             {
                 SaveQRComplete.SetResult(false);
             }
-            return SaveQRComplete.Task;
+            return SaveQRComplete.Task.Result;
         }
     }
     }

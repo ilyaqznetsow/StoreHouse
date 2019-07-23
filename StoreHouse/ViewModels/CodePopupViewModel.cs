@@ -32,20 +32,22 @@ namespace StoreHouse.ViewModels
                         Margin = 10
                     }
                 };
+                /*
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 string filename = Path.Combine(path, $"{CodeValue}.jpg");
                 if (Device.RuntimePlatform == Device.iOS)
                     filename = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "..", "Library", $"{CodeValue}.jpg");
                 var result = barcodeWriter.Write(CodeValue);
+                
                 if (!File.Exists(filename))
                     File.Create(filename);
                 File.WriteAllBytes(filename, result.Pixels);
-                var file = new Xamarin.Essentials.ShareFile(filename);
-                //var result = await DependencyService.Get<ISaver>().Save(CodeValue);
-                //if(result)
+                */
+                var result =  DependencyService.Get<ISaver>().Save(CodeValue);
+                if(result)
                 await ShowAlert("Сохранение", "Успех!", "ok");
-                //else
-                //    await ShowAlert("Ошибка", "не успехф", "ok");
+                else
+                    await ShowAlert("Ошибка", "не успехф", "ok");
 
             }
             catch (Exception ex)

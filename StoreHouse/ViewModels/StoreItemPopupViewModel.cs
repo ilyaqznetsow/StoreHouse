@@ -15,13 +15,13 @@ namespace StoreHouse.ViewModels
         public string CompleteButtonText { get; set; }
 
          object CurrentItem { get; set; }
-        int? StoreItemId { get; set; }
+        StoreItem StoreItem { get; set; }
 
         public ICommand CompleteCommand => MakeCommand(async () =>
         {
-            if (CurrentItem is StorePlace place &&StoreItemId.HasValue)
+            if (CurrentItem is StorePlace place && StoreItem != null)
             {
-                place.CurrentlyLockedBy = StoreItemId;
+                place.CurrentlyLockedBy = StoreItem.Id;
                 await App.Database.SaveAsync(CurrentItem);
             }
 
@@ -37,9 +37,9 @@ namespace StoreHouse.ViewModels
             {
                 CurrentItem = navigationParams["Object"];
             }
-            if (navigationParams.ContainsKey("StoreItemId"))
+            if (navigationParams.ContainsKey("StoreItem"))
             {
-                StoreItemId = (int)navigationParams["StoreItemId"];
+                StoreItem = (StoreItem)navigationParams["StoreItem"];
             }
 
             if (CurrentItem is StoreItem storeItem)
